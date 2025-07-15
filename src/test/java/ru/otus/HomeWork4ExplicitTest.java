@@ -20,6 +20,7 @@ public class HomeWork4ExplicitTest {
     private final String URL = "https://otus.home.kartushin.su/training.html";
     private final By FIELD_TEXT = By.id("textInput");
     private final By MODAL_WINDOW_BUTTON = By.id("openModalBtn");
+    private final By MODAL_WINDOW_CLOSE = By.id("closeModal");
     private final By MODAL_WINDOW = By.cssSelector("#myModal>div>h2");
     private final By FIELD_NAME = By.cssSelector("#sampleForm>#name");
     private final By FIELD_EMAIL = By.cssSelector("#sampleForm>#email");
@@ -50,11 +51,11 @@ public class HomeWork4ExplicitTest {
         webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         webDriver.get(URL);
-        WebElement webElement = getElement(FIELD_TEXT);
+        WebElement fieldText = getElement(FIELD_TEXT);
 
-        webElement.sendKeys("OTUS");
+        fieldText.sendKeys("OTUS");
         log.info("Проверка результата 1 теста");
-        Assertions.assertEquals("OTUS", webElement.getAttribute("value"));
+        Assertions.assertEquals("OTUS", fieldText.getAttribute("value"));
     }
 
     @Test
@@ -64,12 +65,13 @@ public class HomeWork4ExplicitTest {
         webDriver.manage().window().maximize();
 
         webDriver.get(URL);
-        WebElement webElement = getElement(MODAL_WINDOW_BUTTON);
-        webElement.click();
+        getElement(MODAL_WINDOW_BUTTON).click();
 
-        WebElement webElement1 = getElement(MODAL_WINDOW);
+        WebElement modalWindow = getElement(MODAL_WINDOW);
         log.info("Проверка результата 2 теста");
-        Assertions.assertTrue(webElement1.isEnabled());
+        Assertions.assertTrue(modalWindow.isDisplayed());
+        getElement(MODAL_WINDOW_CLOSE).click();
+        Assertions.assertFalse(modalWindow.isDisplayed());
     }
 
     @Test
@@ -79,17 +81,14 @@ public class HomeWork4ExplicitTest {
         webDriver.manage().window().maximize();
 
         webDriver.get(URL);
-        WebElement webElement = getElement(FIELD_NAME);
-        webElement.sendKeys("фыв");
-        WebElement webElement1 = getElement(FIELD_EMAIL);
-        webElement1.sendKeys("asdf@sdfg.rt");
-        WebElement webElement2 = getElement(BUTTON_SEND);
-        webElement2.click();
+        getElement(FIELD_NAME).sendKeys("фыв");
+        getElement(FIELD_EMAIL).sendKeys("asdf@sdfg.rt");
+        getElement(BUTTON_SEND).click();
 
-        WebElement webElement3 = getElement(MESSAGE_BOX);
+        WebElement messageBox = getElement(MESSAGE_BOX);
         log.info("Проверка результата 3 теста");
         Assertions.assertEquals("Форма отправлена с именем: фыв и email: asdf@sdfg.rt",
-                                webElement3.getText());
+                                messageBox.getText());
     }
 
     private WebElement getElement(By locator) {

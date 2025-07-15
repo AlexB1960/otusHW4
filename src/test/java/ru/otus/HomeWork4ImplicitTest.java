@@ -43,11 +43,11 @@ public class HomeWork4ImplicitTest {
         webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         webDriver.get(URL);
-        WebElement webElement = webDriver.findElement(By.id("textInput"));
+        WebElement fieldText = webDriver.findElement(By.id("textInput"));
 
-        webElement.sendKeys("OTUS");
+        fieldText.sendKeys("OTUS");
         log.info("Проверка результата 1 теста");
-        Assertions.assertEquals("OTUS", webElement.getAttribute("value"));
+        Assertions.assertEquals("OTUS", fieldText.getAttribute("value"));
     }
 
     @Test
@@ -57,12 +57,13 @@ public class HomeWork4ImplicitTest {
         webDriver.manage().window().maximize();
 
         webDriver.get(URL);
-        WebElement webElement = webDriver.findElement(By.id("openModalBtn"));
-        webElement.click();
+        webDriver.findElement(By.id("openModalBtn")).click();
 
-        WebElement webElement1 =webDriver.findElement(By.cssSelector("#myModal>div>h2"));
+        WebElement modalWindow = webDriver.findElement(By.cssSelector("#myModal>div>h2"));
         log.info("Проверка результата 2 теста");
-        Assertions.assertTrue(webElement1.isEnabled());
+        Assertions.assertTrue(modalWindow.isDisplayed());
+        webDriver.findElement(By.cssSelector("#closeModal")).click();
+        Assertions.assertFalse(modalWindow.isDisplayed());
     }
 
     @Test
@@ -72,17 +73,14 @@ public class HomeWork4ImplicitTest {
         webDriver.manage().window().maximize();
 
         webDriver.get(URL);
-        WebElement webElement = webDriver.findElement(By.cssSelector("#sampleForm>#name"));
-        webElement.sendKeys("фыв");
-        WebElement webElement1 = webDriver.findElement(By.cssSelector("#sampleForm>#email"));
-        webElement1.sendKeys("asdf@sdfg.rt");
-        WebElement webElement2 = webDriver.findElement(By.cssSelector("#sampleForm>button"));
-        webElement2.click();
+        webDriver.findElement(By.cssSelector("#sampleForm>#name")).sendKeys("фыв");
+        webDriver.findElement(By.cssSelector("#sampleForm>#email")).sendKeys("asdf@sdfg.rt");
+        webDriver.findElement(By.cssSelector("#sampleForm>button")).click();
 
-        WebElement webElement3 = webDriver.findElement(By.cssSelector("#messageBox"));
+        WebElement messageBox = webDriver.findElement(By.cssSelector("#messageBox"));
         log.info("Проверка результата 3 теста");
         Assertions.assertEquals("Форма отправлена с именем: фыв и email: asdf@sdfg.rt",
-                                webElement3.getText());
+                                messageBox.getText());
     }
 
     @AfterEach
