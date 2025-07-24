@@ -33,7 +33,7 @@ public class HomeWork4ExplicitTest {
     }
 
     @BeforeEach
-    public void starDriver() {
+    public void setDriver() {
         ChromeOptions options = new ChromeOptions();
         log.info("Запуск вебдрайвера webDiver");
         webDriver = new ChromeDriver(options);

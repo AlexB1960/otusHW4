@@ -1,0 +1,71 @@
+package ru.otus;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.otus.connector.SetupDriver;
+
+import java.time.Duration;
+
+public class HW4FullScreenTest {
+    public WebDriver webDriver;
+    public static final Logger log = LogManager.getLogger(HomeWork4ExplicitTest.class);
+    //public final String URL = "https://otus.home.kartushin.su/training.html";
+    private final By MODAL_WINDOW_BUTTON = By.id("openModalBtn");
+    private final By MODAL_WINDOW_CLOSE = By.id("closeModal");
+    private final By MODAL_WINDOW = By.cssSelector("#myModal>div>h2");
+    private final By FIELD_NAME = By.cssSelector("#sampleForm>#name");
+    private final By FIELD_EMAIL = By.cssSelector("#sampleForm>#email");
+    private final By BUTTON_SEND = By.cssSelector("#sampleForm>button");
+    private final By MESSAGE_BOX = By.id("messageBox");
+
+
+    @BeforeEach
+    public void setDriver() {
+        log.info("Запуск вебдрайвера webDriver в режиме fullscreen");
+        webDriver = SetupDriver.startDriver("fullscreen");
+    }
+
+    @AfterEach
+    public void endDriver() {
+        if (webDriver != null) {
+            log.info("Завершение работы вебдрайвера webDriver");
+            webDriver.close();
+        }
+    }
+
+    @Test
+    public void modalWindowTest() {
+        log.info("Старт 2 теста ");
+        getElement(MODAL_WINDOW_BUTTON).click();
+
+        WebElement modalWindow = getElement(MODAL_WINDOW);
+        log.info("Проверка результата 2 теста - открытия модального окна");
+        Assertions.assertTrue(modalWindow.isDisplayed());
+        getElement(MODAL_WINDOW_CLOSE).click();
+        Assertions.assertFalse(modalWindow.isDisplayed());
+    }
+
+    @Test
+    public void sendMessageTest() {
+        log.info("Старт 3 теста - формы отправления динамического сообщения");
+        getElement(FIELD_NAME).sendKeys("фыв");
+        getElement(FIELD_EMAIL).sendKeys("asdf@sdfg.rt");
+        getElement(BUTTON_SEND).click();
+
+        WebElement messageBox = getElement(MESSAGE_BOX);
+        log.info("Проверка результата 3 теста");
+        Assertions.assertEquals("Форма отправлена с именем: фыв и email: asdf@sdfg.rt",
+                messageBox.getText());
+    }
+
+    private WebElement getElement(By locator) {
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+}
