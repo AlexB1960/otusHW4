@@ -13,8 +13,9 @@ import ru.otus.connector.SetupDriver;
 import java.time.Duration;
 
 public class HW4FullScreenTest {
-    public WebDriver webDriver;
-    public static final Logger log = LogManager.getLogger(HomeWork4ExplicitTest.class);
+    private WebDriver webDriver;
+    private SetupDriver setupDriver = new SetupDriver();
+    private final Logger log = LogManager.getLogger(HW4FullScreenTest.class);
     //public final String URL = "https://otus.home.kartushin.su/training.html";
     private final By MODAL_WINDOW_BUTTON = By.id("openModalBtn");
     private final By MODAL_WINDOW_CLOSE = By.id("closeModal");
@@ -28,7 +29,8 @@ public class HW4FullScreenTest {
     @BeforeEach
     public void setDriver() {
         log.info("Запуск вебдрайвера webDriver в режиме fullscreen");
-        webDriver = SetupDriver.startDriver("fullscreen");
+        //webDriver = SetupDriver.startDriver("fullscreen");
+        webDriver = setupDriver.startDriver("fullscreen");
     }
 
     @AfterEach
@@ -41,7 +43,7 @@ public class HW4FullScreenTest {
 
     @Test
     public void modalWindowTest() {
-        log.info("Старт 2 теста ");
+        log.info("Старт 2 теста - открытия модального окна");
         getElement(MODAL_WINDOW_BUTTON).click();
 
         WebElement modalWindow = getElement(MODAL_WINDOW);
@@ -59,7 +61,7 @@ public class HW4FullScreenTest {
         getElement(BUTTON_SEND).click();
 
         WebElement messageBox = getElement(MESSAGE_BOX);
-        log.info("Проверка результата 3 теста");
+        log.info("Проверка результата 3 теста - формы отправления динамического сообщения");
         Assertions.assertEquals("Форма отправлена с именем: фыв и email: asdf@sdfg.rt",
                 messageBox.getText());
     }

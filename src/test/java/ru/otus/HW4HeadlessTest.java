@@ -13,8 +13,9 @@ import ru.otus.connector.SetupDriver;
 import java.time.Duration;
 
 public class HW4HeadlessTest {
-    public static WebDriver webDriver;
-    public static final Logger log = LogManager.getLogger(HomeWork4ExplicitTest.class);
+    private WebDriver webDriver;
+    private SetupDriver setupDriver = new SetupDriver();
+    private final Logger log = LogManager.getLogger(HW4HeadlessTest.class);
     //public final String URL = "https://otus.home.kartushin.su/training.html";
     private final By FIELD_TEXT = By.id("textInput");
 
@@ -22,7 +23,8 @@ public class HW4HeadlessTest {
     @BeforeEach
     public void setDriver() {
         log.info("Запуск вебдрайвера webDriver в режиме headless");
-        webDriver = SetupDriver.startDriver("headless");
+        //webDriver = SetupDriver.startDriver("headless");
+        webDriver = setupDriver.startDriver("headless");
     }
 
     @AfterEach
@@ -39,7 +41,7 @@ public class HW4HeadlessTest {
         WebElement fieldText = getElement(FIELD_TEXT);
 
         fieldText.sendKeys("OTUS");
-        log.info("Проверка результата 1 теста");
+        log.info("Проверка результата 1 теста - текстового поля");
         Assertions.assertEquals("OTUS", fieldText.getAttribute("value"));
     }
 
