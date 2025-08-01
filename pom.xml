@@ -14,16 +14,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <junit.version>5.13.4</junit.version>
+        <log4j.core.version>2.17.1</log4j.core.version>
+        <log4j.api.version>2.17.1</log4j.api.version>
         <webdeivermanager.version>6.2.0</webdeivermanager.version>
-        <selenium.version>4.33.0</selenium.version>
+        <selenium.version>4.34.0</selenium.version>
         <assertj.version>3.27.3</assertj.version>
+        <slf4j.version>2.0.16</slf4j.version>
 
         <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
         <surefire.version>3.5.3</surefire.version>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -35,12 +37,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.17.1</version> <!-- Укажите актуальную версию -->
+            <version>${log4j.core.version}</version> <!-- Укажите актуальную версию -->
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.17.1</version> <!-- Укажите актуальную версию -->
+            <version>${log4j.api.version}</version> <!-- Укажите актуальную версию -->
         </dependency>
 
         <!-- Selenium -->
@@ -63,16 +65,17 @@
             <version>${assertj.version}</version>
         </dependency>
 
+        <!-- для устранения ошибки slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
-            <version>2.0.16</version>
+            <version>${slf4j.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
+            <!--compiler - для компиляции юнит-тестов из консоли-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -82,14 +85,15 @@
                     <source>${maven.compiler.source}</source>
                 </configuration>
             </plugin>
-            <!--Для запуска юнит-тестов из консоли-->
+            <!--surefire - для запуска юнит-тестов из консоли-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <base.url>https://otus.home.kartushin.su/training.html</base.url>
+                        <base.url>https://otus.home.kartushin.su</base.url>
+                        <browser>chrome</browser>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
