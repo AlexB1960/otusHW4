@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public abstract class AbsCommon {
     protected WebDriver driver;
     protected Actions actions;
@@ -21,18 +19,26 @@ public abstract class AbsCommon {
         this.actions = new Actions(driver);
     }
 
-    protected WebElement getElement(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    protected WebElement getElement(By locator, int delay) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(delay));
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected List<WebElement> getElements(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    protected List<WebElement> getElements(By locator, int delay) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(delay));
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
-    protected void checkStringValue(String actual, String expected) {
-        assertThat(actual).isEqualTo(expected);
+    protected boolean waiter(int delay) {
+        boolean delayResult;
+        try {
+            Thread.sleep(Duration.ofSeconds(delay));
+            delayResult = true;
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+            delayResult = false;
+        }
+        return delayResult;
     }
 
 }

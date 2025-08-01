@@ -9,27 +9,28 @@ public class FirstPageFullscreenTest extends AbsBaseTestSuite {
     private final Logger log = LogManager.getLogger(FirstPageFullscreenTest.class);
 
     public FirstPageFullscreenTest() {
-        this.mode = "fullscreen";
+        super.mode = "fullscreen";
     }
 
     @Test
     public void modalWindowTest() {
         FirstPage firstPage = new FirstPage(driver);
         firstPage.open();
-        log.info("Старт 2 теста - открытия модального окна");
+        log.info("Старт 2 теста - открытие и закрытие модального окна");
         firstPage.openModalWindow();
-        log.info("Проверка результата 2 теста - открытия модального окна");
+        log.info("Проверка результата 2 теста - открытие и закрытие модального окна");
         firstPage.assertOpenModalWindow();
+        firstPage.assertCloseModalWindow();
     }
 
     @Test
     public void sendMessageTest() {
         FirstPage firstPage = new FirstPage(driver);
         firstPage.open();
-        log.info("Старт 3 теста - формы отправления динамического сообщения");
+        log.info("Старт 3 теста - форма отправления динамического сообщения");
         firstPage.fillForm();
         firstPage.sendForm();
-        log.info("Проверка результата 3 теста - формы отправления динамического сообщения");
+        log.info("Проверка результата 3 теста - форма отправления динамического сообщения");
         firstPage.assertMessageBox();
     }
 

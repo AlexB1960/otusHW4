@@ -14,9 +14,8 @@ public class ChromeDriverSettings implements ISettings {
         if (userArgs[0].toLowerCase().trim().equals("headless")) {
             chromeOptions.addArguments("headless");
         }
-
         //chromeOptions.merge(desiredCapabilities);
-
         return chromeOptions;
     }
+
 }

@@ -15,9 +15,7 @@ public class EdgeDriverSettings implements ISettings {
         if (userArgs[0].toLowerCase().trim().equals("headless")) {
             edgeOptions.addArguments("headless");
         }
-
         //edgeOptions.merge(desiredCapabilities);
-
         return edgeOptions;
     }
 }

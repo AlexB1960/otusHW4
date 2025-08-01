@@ -15,4 +15,5 @@ public abstract class AbsBasePage extends AbsCommon {
     public void open() {
         super.driver.get(baseUrl + path);
     }
+
 }

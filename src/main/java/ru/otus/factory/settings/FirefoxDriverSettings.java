@@ -15,9 +15,7 @@ public class FirefoxDriverSettings implements ISettings {
         if (userArgs[0].toLowerCase().trim().equals("headless")) {
             firefoxOptions.addArguments("headless");
         }
-
         //firefoxOptions.merge(desiredCapabilities);
-
         return firefoxOptions;
     }
 }
