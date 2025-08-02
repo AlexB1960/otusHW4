@@ -19,20 +19,26 @@ public abstract class AbsCommon {
         this.actions = new Actions(driver);
     }
 
-    protected WebElement getElement(By locator, int delay) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(delay));
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    protected WebElement getElement(By locator, long delay) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(delay));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        //presenceOfElementLocated
     }
 
-    protected List<WebElement> getElements(By locator, int delay) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(delay));
-        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+    protected List<WebElement> getElements(By locator, long delay) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(delay));
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        //presenceOfAllElementsLocatedBy
     }
 
-    protected boolean waiter(int delay) {
+    protected void clickElement(By locator, long delay) {
+        getElement(locator, delay).click();
+    }
+
+    protected boolean waiter(long delay) {
         boolean delayResult;
         try {
-            Thread.sleep(Duration.ofSeconds(delay));
+            Thread.sleep(Duration.ofMillis(delay));
             delayResult = true;
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());

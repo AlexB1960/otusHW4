@@ -21,44 +21,44 @@ public class FirstPage extends AbsBasePage {
     }
 
     public void openModalWindow() {
-        getElement(MODAL_WINDOW_BUTTON, 10).click();
+        getElement(MODAL_WINDOW_BUTTON, 10000).click();
     }
 
     public void assertOpenModalWindow() {
-        WebElement modalWindow = getElement(MODAL_WINDOW, 10);
-        waiter(1);
+        WebElement modalWindow = getElement(MODAL_WINDOW, 10000);
+        waiter(900);
         assertThat(modalWindow.isDisplayed()).isTrue();
     }
 
     public void assertCloseModalWindow() {
-        WebElement modalWindow = getElement(MODAL_WINDOW_CLOSE,10);
+        WebElement modalWindow = getElement(MODAL_WINDOW_CLOSE,10000);
         modalWindow.click();
-        waiter(1);
+        waiter(900);
         assertThat(modalWindow.isDisplayed()).isFalse();
     }
 
     public void fillForm() {
-        getElement(FIELD_NAME,10).sendKeys("фыв");
-        getElement(FIELD_EMAIL, 10).sendKeys("asdf@sdfg.rt");
+        getElement(FIELD_NAME,10000).sendKeys("фыв");
+        getElement(FIELD_EMAIL, 10000).sendKeys("asdf@sdfg.rt");
     }
 
     public void sendForm() {
-        getElement(BUTTON_SEND,10).click();
+        getElement(BUTTON_SEND,10000).click();
     }
 
     public void assertMessageBox() {
-        String actualText = getElement(MESSAGE_BOX,10).getText();
-        waiter(1);
+        String actualText = getElement(MESSAGE_BOX,10000).getText();
+        waiter(900);
         assertThat(actualText).isEqualTo("Форма отправлена с именем: фыв и email: asdf@sdfg.rt");
     }
 
     public void inputText() {
-        getElement(FIELD_TEXT,10).sendKeys("OTUS");
+        getElement(FIELD_TEXT,10000).sendKeys("OTUS");
     }
 
     public void assertInputText() {
-        String actualText = getElement(FIELD_TEXT,10).getAttribute("value");
-        waiter(1);
+        String actualText = getElement(FIELD_TEXT,10000).getAttribute("value");
+        waiter(900);
         assertThat(actualText).isEqualTo("OTUS");
     }
 
