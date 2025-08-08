@@ -1,6 +1,7 @@
 package ru.otus.common;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -19,32 +20,44 @@ public abstract class AbsCommon {
         this.actions = new Actions(driver);
     }
 
-    protected WebElement getElement(By locator, long delay) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(delay));
+    protected WebElement getElement(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        //presenceOfElementLocated
     }
 
-    protected List<WebElement> getElements(By locator, long delay) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(delay));
+    protected List<WebElement> getElements(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
-        //presenceOfAllElementsLocatedBy
     }
 
-    protected void clickElement(By locator, long delay) {
-        getElement(locator, delay).click();
+    protected void clickElement(By locator) {
+        getElement(locator).click();
     }
 
-    protected boolean waiter(long delay) {
-        boolean delayResult;
+    protected boolean isAvailable(By element) {
+        boolean elementStatus;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         try {
-            Thread.sleep(Duration.ofMillis(delay));
-            delayResult = true;
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-            delayResult = false;
+            wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+            elementStatus = true;
+        } catch (TimeoutException e) {
+            System.out.println(e.getMessage() + " Locator " + element + " is not available!");
+            elementStatus = false;
         }
-        return delayResult;
+        return elementStatus;
+    }
+
+    protected boolean notAvailable(By element) {
+        boolean elementStatus;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
+        try {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(element));
+            elementStatus = true;
+        } catch (TimeoutException e) {
+            System.out.println(e.getMessage() + " Locator " + element + " is yet available!");
+            elementStatus = false;
+        }
+        return elementStatus;
     }
 
 }

@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import ru.otus.factory.WebDriverFactory;
 
 public abstract class AbsBaseTestSuite {
-    protected WebDriver driver;
+    protected WebDriver driver;  //protected
     protected String mode;
 
     @BeforeEach
